@@ -7,9 +7,13 @@ name = "pypi"
 "discord.py" = {git = "https://github.com/Rapptz/discord.py.git", ref = "rewrite"}
 dynaconf = "*"
 aiohttp = "*"
+redis = "*"
+hiredis = "*"
+aioredis = "*"
 
 [dev-packages]
 yapf = "*"
+rope = "*"
 
 [requires]
 python_version = "3.7"

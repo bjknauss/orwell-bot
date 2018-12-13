@@ -1,11 +1,15 @@
 from dynaconf import settings
 from discord.ext import commands
 
-class OrwellBot(commands.Bot):
-    '''Bot designed to track user activity.'''
+bot = commands.Bot(command_prefix=',', description='Bot designed to track user activity.')
+bot.load_extension('orwell.ext.activity')
 
-    @commands.command()
+@bot.event
+async def on_ready():
+    print(f'Logged in as {bot.user}.')
+
+
+@bot.command()
+async def ping(ctx: commands.Context):
     '''Test that the server is working properly.'''
-    async def ping(self, ctx: commands.Context):
-        await ctx.send(f'pong! Current latency is {self.latency} ms')
-
+    await ctx.send(f'pong! Current latency is {round(bot.latency * 1000)} ms')
