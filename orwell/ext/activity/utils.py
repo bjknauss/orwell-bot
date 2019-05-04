@@ -54,7 +54,7 @@ def get_previous_month(date_resolvable=date.today()):
 
 def resolve_date(date_resolvable):
 
-    if issubclass(date_resolvable, date):
+    if issubclass(type(date_resolvable, date):
         return date_resolvable
 
     return get_date_from_discord_obj(date_resolvable)
