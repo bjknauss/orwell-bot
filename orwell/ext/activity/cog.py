@@ -4,6 +4,7 @@ from typing import Optional
 from redis import Redis
 from dynaconf import settings
 from orwell.ext.activity import keys, utils, shared
+from datetime import date
 
 
 class ActivityCog:
@@ -27,6 +28,7 @@ class ActivityCog:
     async def top_month(self,
                         ctx: commands.Context,
                         role: Optional[discord.Role] = None):
+        '''Check user activity for this month.'''
         key = keys.monthly(ctx.message)
         results = self.get_result_set(key, role_filter=role)
         results = results[:25]
@@ -41,6 +43,7 @@ class ActivityCog:
     async def last_month(self,
                          ctx: commands.Context,
                          role: Optional[discord.Role] = None):
+        '''Check last months activity.'''
         last_month = utils.get_previous_month(ctx)
         key = keys.monthly(ctx.message, last_month)
         results = self.get_result_set(key, role_filter=role)
@@ -48,6 +51,27 @@ class ActivityCog:
         results = utils.parse_results(self.bot, results)
 
         title = last_month.strftime('Top - %b')
+        resp = self.print_top_results(ctx, results, title=title)
+        await ctx.send(resp)
+
+    @commands.command(aliases=['ms'], name='month_search')
+    @commands.guild_only()
+    async def month_search(self,
+                           ctx: commands.Context,
+                           year: int,
+                           month: int,
+                           role: Optional[discord.Role] = None):
+        '''Allows you to check activity for a given month.'''
+        if (month < 1 or month > 12):
+            await ctx.send(f'"{month}" is not a valid month...')
+            return
+        d = date(year, month, 1)
+        key = keys.monthly(ctx.message, d)
+        results = self.get_result_set(key, role_filter=role)
+        results = results[:25]
+        results = utils.parse_results(self.bot, results)
+
+        title = d.strftime('Top - %b')
         resp = self.print_top_results(ctx, results, title=title)
         await ctx.send(resp)
 
