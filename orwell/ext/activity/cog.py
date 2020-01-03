@@ -75,6 +75,7 @@ class ActivityCog(commands.Cog):
         resp = self.print_top_results(ctx, results, title=title)
         await ctx.send(resp)
 
+    @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
         if not isinstance(message.channel, discord.TextChannel):
             return
