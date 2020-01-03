@@ -7,7 +7,7 @@ from orwell.ext.activity import keys, utils, shared
 from datetime import date
 
 
-class ActivityCog:
+class ActivityCog(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.redis: Redis = Redis(
