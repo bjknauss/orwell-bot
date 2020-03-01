@@ -1,7 +1,15 @@
 [[source]]
-url = "https://pypi.org/simple"
+url = "https://www.piwheels.org/simple"
+verify_ssl = true
+name = "piwheels"
+
+[[source]]
+url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
+
+[scripts]
+bot = "python main.py"
 
 [packages]
 "discord.py" = "*"
@@ -11,6 +19,7 @@ redis = "*"
 hiredis = "*"
 aioredis = "*"
 faker = "*"
+"async-timeout" = {version="<4.0,>=3.0.0", index="pypi"}
 
 [dev-packages]
 yapf = "*"
